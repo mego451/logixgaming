@@ -54,35 +54,33 @@ client.on("messageCreate", async (message) => {
   };
 
   fs.writeFileSync(FILE_PATH, JSON.stringify(payload, null, 2));
-  console.log("✅ Message saved to file .");
+  console.log("✅ Message saved to file.");
 
   // رفع الملف على FTP بعد الكتابة
   await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
-
+client.user.setActivity('in nose', { type: 'PLAYING' });
 const statuses = [
-  { name: 'GTA V', type: 'PLAYING' },
-  { name: 'YouTube', type: 'WATCHING' },
-  { name: 'the server', type: 'WATCHING' },
-  { name: 'Discord', type: 'LISTENING' }
+  { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
+  { name: 'P*rn', type: 'WATCHING' },
+  { name: 'Mando's Mom', type: 'WATCHING' },
+  { name: 'Essam Sasa', type: 'LISTENING' }
 ];
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-  
+
   // تغيير النشاط كل دقيقة
   let i = 0;
   setInterval(() => {
     const status = statuses[i % statuses.length];
-    client.user.setActivity(status.name, { type: status.type })
-      .catch(console.error); // التعامل مع الأخطاء في حالة وجود مشكلة
+    client.user.setActivity(status.name, { type: status.type });
     i++;
-  }, 60 * 1000); // تحديث النشاط كل 60 ثانية
-  client.user.setActivity('Playing GTA', { type: 'PLAYING' });
-  // تفعيل وضع DND
-  client.user.setStatus('dnd').catch(console.error); // إضافة catch للتعامل مع الأخطاء
-});
+  }, 30 * 1000); // تحديث النشاط كل 60 ثانية
 
+  // تفعيل وضع DND
+  client.user.setStatus('dnd');
+});
 
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
