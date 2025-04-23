@@ -61,26 +61,28 @@ client.on("messageCreate", async (message) => {
 });
 
 const statuses = [
-  { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
-  { name: 'P*rn', type: 'WATCHING' },
-  { name: 'Essam Sasa', type: 'LISTENING' },
-  { name: 'La casa de papel', type: 'WATCHING' }
+  { name: 'GTA V', type: 'PLAYING' },
+  { name: 'YouTube', type: 'WATCHING' },
+  { name: 'the server', type: 'WATCHING' },
+  { name: 'Discord', type: 'LISTENING' }
 ];
 
-// تغيير النشاط كل 60 ثانية
 client.once('ready', () => {
   console.log('بوت جاهز!');
-
+  
+  // تغيير النشاط كل دقيقة
   let i = 0;
   setInterval(() => {
     const status = statuses[i % statuses.length];
-    client.user.setActivity(status.name, { type: status.type });
+    client.user.setActivity(status.name, { type: status.type })
+      .catch(console.error); // التعامل مع الأخطاء في حالة وجود مشكلة
     i++;
-  }, 60 * 1000);
-
-  // تغيير الحالة إلى "عدم الإزعاج" عند بدء البوت
-  client.user.setStatus('dnd');
+  }, 60 * 1000); // تحديث النشاط كل 60 ثانية
+  client.user.setActivity('Playing GTA', { type: 'PLAYING' });
+  // تفعيل وضع DND
+  client.user.setStatus('dnd').catch(console.error); // إضافة catch للتعامل مع الأخطاء
 });
+
 
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
