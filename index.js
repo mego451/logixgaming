@@ -69,13 +69,19 @@ const statuses = [
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-  // تغيير النشاط كل دقيقة
+  
+  // تغيير النشاط كل 30 ثانية
   let i = 0;
   setInterval(() => {
     const status = statuses[i % statuses.length];
-    client.user.setActivity(status.name, { type: status.type });
+    client.user.setPresence({
+      activities: [{ name: status.name, type: status.type }],
+      status: 'online'  // يمكنك تغيير هذه القيمة إلى "dnd" أو "idle" حسب الحاجة
+    });
     i++;
-  }, 30 * 1000); // تحديث النشاط كل 60 ثانية
+  }, 30 * 1000); // تحديث النشاط كل 30 ثانية
+});
+
 
   // تفعيل وضع DND
   
