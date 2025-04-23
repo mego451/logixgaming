@@ -42,7 +42,7 @@ client.on("ready", async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
   // جلب السيرفر بالقوة إذا مش موجود في الكاش
-  const guild = await client.guilds.fetch("1363168613662228501").catch(console.error);
+  const guild = await client.guilds.fetch("1362391776391856229").catch(console.error);
   if (!guild) {
     console.error("❌ السيرفر مش موجود أو حصلت مشكلة في جلبه.");
     return;
