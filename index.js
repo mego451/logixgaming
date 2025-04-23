@@ -78,7 +78,10 @@ client.on("ready", async () => {
     // قراءة البيانات من الملف المحمل
     if (fs.existsSync(PLAYER_COUNT_FILE)) {
       const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+      console.log("📂 Contents of playercount.json:", data); // طباعة محتويات الملف للتأكد
+
       const { playerCount } = JSON.parse(data);
+      console.log("🟢 Player count:", playerCount); // طباعة قيمة playerCount
 
       if (playerCount === undefined) {
         console.error("❌ Player count is undefined.");
