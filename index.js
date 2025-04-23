@@ -57,15 +57,27 @@ client.on("messageCreate", (message) => {
 
   // رفع الملف على FTP
   uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
-});
-client.once('ready', () => {
-    console.log('بوت جاهز!');
-    
-    // تعيين الحالة إلى "Playing GTA"
-    client.user.setActivity('Playing GTA', { type: 'PLAYING' });
 
-    // تفعيل وضع DND
-    client.user.setStatus('dnd');
+  const statuses = [
+  { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
+  { name: 'P*rn', type: 'WATCHING' },
+  { name: 'Essam Sasa', type: 'LISTENING' },
+  { name: 'La casa de papel', type: 'WATCHING' }
+];
+
+client.once('ready', () => {
+  console.log('بوت جاهز!');
+
+  // تغيير النشاط كل 60 ثانية
+  let i = 0;
+  setInterval(() => {
+    const status = statuses[i % statuses.length];
+    client.user.setActivity(status.name, { type: status.type });
+    i++;
+  }, 60 * 1000);
+
+  client.user.setStatus('dnd');
 });
+
 
 client.login(DISCORD_TOKEN);
