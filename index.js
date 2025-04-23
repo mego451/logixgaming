@@ -79,13 +79,15 @@ client.on('guildMemberAdd', async member => {
   if (!channel) return;
 
   const attachment = new AttachmentBuilder('./welcome.jpeg');
+
   const embed = new EmbedBuilder()
-    .setTitle(`👋 Welcome!`)
-    .setDescription(`Hello ${member.user.username} and welcome to LogiXGaming Discord Server!\nYou are member number ${member.guild.memberCount}, enjoy your stay!`)
-    .setImage('attachment://welcome.jpeg')
+    .setImage('attachment://welcome.jpeg') // بس صورة
     .setColor('#00bfff');
 
-  channel.send({ embeds: [embed], files: [attachment] });
+  const welcomeMessage = `👋 Hello ${member.user.username} and welcome to **LogiXGaming** Discord Server!\nYou are member number **${member.guild.memberCount}** – enjoy your stay!`;
+
+  channel.send({ content: welcomeMessage, embeds: [embed], files: [attachment] });
 });
+
 
 client.login(DISCORD_TOKEN);
