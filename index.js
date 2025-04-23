@@ -54,12 +54,28 @@ client.on("ready", async () => {
     return;
   }
 
-  setInterval(() => {
-    const count = guild.memberCount;
-    memberChannel.setName(`👥 Server Members: ${count}`)
-      .then(() => console.log(`🔁 تم تحديث اسم القناة بعدد الأعضاء: ${count}`))
-      .catch(console.error);
-  }, 60000);
+ const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
+const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
+
+async function updatePlayerCountChannelName() {
+  try {
+    const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+    const { playerCount } = JSON.parse(data);
+
+    const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
+    if (channel) {
+      await channel.setName(`🟢 Players: ${playerCount}`);
+      console.log("✅ Channel name updated.");
+    }
+  } catch (err) {
+    console.error("❌ Error updating channel name:", err.message);
+  }
+}
+
+client.on("ready", () => {
+  setInterval(updatePlayerCountChannelName, 1000); // كل دقيقة
+
+
   
   // باقي الأكواد...
 
