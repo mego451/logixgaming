@@ -54,7 +54,7 @@ client.on("messageCreate", async (message) => {
   };
 
   fs.writeFileSync(FILE_PATH, JSON.stringify(payload, null, 2));
-  console.log("✅ Message saved to file.");
+  console.log("✅ Message saved to file .");
 
   // رفع الملف على FTP بعد الكتابة
   await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
