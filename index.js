@@ -69,7 +69,6 @@ const statuses = [
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-client.user.setActivity('in your nose', { type: 'PLAYING' });
   // تغيير النشاط كل دقيقة
   let i = 0;
   setInterval(() => {
