@@ -48,7 +48,7 @@ client.on("ready", async () => {
     return;
   }
 
-  const memberChannel = guild.channels.cache.get("1364441814006157393");
+  const memberChannel = guild.channels.cache.get("1364623636509626420");
   if (!memberChannel) {
     console.error("❌ القناة مش موجودة أو مش متاحة.");
     return;
