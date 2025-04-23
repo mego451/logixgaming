@@ -24,7 +24,7 @@ client.on("messageCreate", async (message) => {
         const fetchedMessages = await message.channel.messages.fetch({ limit: 100 });
         await message.channel.bulkDelete(fetchedMessages);
         console.log("✅ Messages cleared!");
-        message.channel.send("✅ تم مسح الشات!").then((msg) => msg.delete({ timeout: 5000 }));
+        message.channel.send("✅ تم مسح الشات!").then((msg) => msg.delete({ timeout: 10000 }));
       } catch (error) {
         console.error("❌ Error while clearing messages:", error);
         message.channel.send("❌ حدث خطأ أثناء مسح الشات!").then((msg) => msg.delete({ timeout: 5000 }));
