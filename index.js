@@ -38,19 +38,32 @@ async function uploadFileToFTP(localPath, remotePath) {
   client.close();
 }
 
-client.on("ready", () => {
+client.on("ready", async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
-  // تحديث عدد الأعضاء في اسم القناة
-  const guild = client.guilds.cache.get("1363168613662228501"); // ID السيرفر
-  const memberChannel = guild.channels.cache.get("1364623636509626420"); // ID القناة
+  // جلب السيرفر بالقوة إذا مش موجود في الكاش
+  const guild = await client.guilds.fetch("1363168613662228501").catch(console.error);
+  if (!guild) {
+    console.error("❌ السيرفر مش موجود أو حصلت مشكلة في جلبه.");
+    return;
+  }
+
+  const memberChannel = guild.channels.cache.get("1364441814006157393");
+  if (!memberChannel) {
+    console.error("❌ القناة مش موجودة أو مش متاحة.");
+    return;
+  }
 
   setInterval(() => {
     const count = guild.memberCount;
-    memberChannel.setName(`👥 Game Members: ${count}`)
+    memberChannel.setName(`👥 Members: ${count}`)
       .then(() => console.log(`🔁 تم تحديث اسم القناة بعدد الأعضاء: ${count}`))
       .catch(console.error);
-  }, 60000); // كل دقيقة
+  }, 60000);
+  
+  // باقي الأكواد...
+
+
 
   // حالات البوت
   const statuses = [
