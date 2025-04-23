@@ -36,53 +36,74 @@ async function connectFTP() {
 }
 
 async function uploadFileToFTP(localPath, remotePath) {
+  const client = new ftp.Client(); // Local client
+  client.ftp.verbose = false;
+
   try {
-    await ftpClient.uploadFrom(localPath, remotePath);
+    await client.access({
+      host: "78.47.204.80",
+      user: "lgserver",
+      password: "20012155m",
+      secure: false,
+    });
+
+    await client.uploadFrom(localPath, remotePath);
     console.log("✅ File uploaded to FTP!");
   } catch (err) {
     console.error("❌ FTP Upload Error:", err.message);
   } finally {
-    ftpClient.close(); // التأكد من إغلاق الاتصال بعد كل عملية رفع
+    client.close(); // Close it properly after done
   }
 }
+
 
 async function downloadPlayerCount(retries = 3) {
   let playerCount = null;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
+    const client = new ftp.Client(); // Local client
+    client.ftp.verbose = false;
+
     try {
-      const remotePath = "/mods/deathmatch/resources/[In-Server]/mg_Discord/playercount.json"; // المسار الجديد في سيرفر MTA
-      await ftpClient.downloadTo(PLAYER_COUNT_FILE, remotePath);
+      await client.access({
+        host: "78.47.204.80",
+        user: "lgserver",
+        password: "20012155m",
+        secure: false,
+      });
+
+      const remotePath = "/mods/deathmatch/resources/[In-Server]/mg_Discord/playercount.json";
+      await client.downloadTo(PLAYER_COUNT_FILE, remotePath);
       console.log("✅ playercount.json file downloaded successfully!");
 
-      // قراءة البيانات من الملف المحمل
       if (fs.existsSync(PLAYER_COUNT_FILE)) {
         const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
-        console.log("📂 Contents of playercount.json:", data); // طباعة محتويات الملف للتأكد
+        console.log("📂 Contents of playercount.json:", data);
 
-        const jsonData = JSON.parse(data); // تحويل البيانات إلى كائن جافا سكربت
-        const playerCountObj = jsonData[0]; // الحصول على الكائن الأول من المصفوفة
-        playerCount = playerCountObj ? playerCountObj.playerCount : null; // استخراج playerCount
+        const jsonData = JSON.parse(data);
+        const playerCountObj = Array.isArray(jsonData) ? jsonData[0] : jsonData;
+        playerCount = playerCountObj?.playerCount ?? null;
 
-        console.log("🟢 Player count:", playerCount); // طباعة قيمة playerCount
+        console.log("🟢 Player count:", playerCount);
       }
 
-      break; // إذا نجحت العملية، اخرج من الحلقة
+      break; // Exit loop on success
     } catch (err) {
       console.error(`❌ Error downloading player count (attempt ${attempt}): ${err.message}`);
       if (attempt < retries) {
         console.log(`⏳ Retrying in 5 seconds...`);
-        await new Promise(resolve => setTimeout(resolve, 5000)); // الانتظار 5 ثواني قبل المحاولة التالية
-      } else {
-        console.error("❌ Maximum retry attempts reached.");
+        await new Promise(resolve => setTimeout(resolve, 5000));
       }
     } finally {
-      ftpClient.close(); // التأكد من إغلاق الاتصال بعد كل عملية تحميل
+      client.close(); // Close after each attempt
     }
   }
 
   return playerCount;
 }
+
+
+
 
 client.on("ready", async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
