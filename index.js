@@ -57,28 +57,47 @@ client.on("ready", async () => {
 
   // دالة لتحديث اسم القناة
   async function updatePlayerCountChannelName() {
-    try {
-      if (fs.existsSync(PLAYER_COUNT_FILE)) {
-        const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
-        const { playerCount } = JSON.parse(data);
+  try {
+    const remotePath = "/mods/deathmatch/resources/[In-Server]/mg_Discord/playercount.json"; // المسار الجديد في سيرفر MTA
 
-        if (playerCount === undefined) {
-          console.error("❌ Player count is undefined.");
-          return;
-        }
+    // هنا نستخدم FTP لتحميل الملف من السيرفر
+    const client = new ftp.Client();
+    client.ftp.verbose = false;
 
-        const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
-        if (channel) {
-          await channel.setName(`🟢 Players: ${playerCount}`);
-          console.log("✅ Channel name updated.");
-        }
-      } else {
-        console.error("❌ playercount.json file not found.");
+    await client.access({
+      host: "78.47.204.80", // IP السيرفر
+      user: "lgserver", // اسم المستخدم
+      password: "20012155m", // كلمة المرور
+      secure: false,
+    });
+
+    // تحميل الملف من سيرفر MTA
+    await client.downloadTo(PLAYER_COUNT_FILE, remotePath);
+    console.log("✅ playercount.json file downloaded successfully!");
+
+    // قراءة البيانات من الملف المحمل
+    if (fs.existsSync(PLAYER_COUNT_FILE)) {
+      const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+      const { playerCount } = JSON.parse(data);
+
+      if (playerCount === undefined) {
+        console.error("❌ Player count is undefined.");
+        return;
       }
-    } catch (err) {
-      console.error("❌ Error updating player count:", err.message);
+
+      const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
+      if (channel) {
+        await channel.setName(`🟢 Players: ${playerCount}`);
+        console.log("✅ Channel name updated.");
+      }
+    } else {
+      console.error("❌ playercount.json file not found.");
     }
+  } catch (err) {
+    console.error("❌ Error updating player count:", err.message);
   }
+}
+
 
   // تحديث اسم القناة كل دقيقة
   setInterval(updatePlayerCountChannelName, 1000); // كل دقيقة
