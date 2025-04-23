@@ -60,11 +60,13 @@ client.on("messageCreate", async (message) => {
   await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
 
+const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
+
 const statuses = [
-  { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
-  { name: 'P*rn', type: 'WATCHING' },
-  { name: "Mando's Mom", type: 'WATCHING' },
-  { name: 'Essam Sasa', type: 'LISTENING' }
+  { name: 'MTA: LogiXGaming Roleplay', type: ActivityType.Playing },
+  { name: 'Sarah Jay P*rn', type: ActivityType.Watching },
+  { name: "Mando's Mom Showering", type: ActivityType.Watching },
+  { name: 'Essam Sasa E7na so7ab baladna', type: ActivityType.Listening }
 ];
 
 client.once('ready', () => {
@@ -76,11 +78,12 @@ client.once('ready', () => {
     const status = statuses[i % statuses.length];
     client.user.setPresence({
       activities: [{ name: status.name, type: status.type }],
-      status: 'online'  // يمكنك تغيير هذه القيمة إلى "dnd" أو "idle" حسب الحاجة
+      status: 'dnd', // تغيير الحالة هنا (dnd, online, idle)
     });
     i++;
   }, 30 * 1000); // تحديث النشاط كل 30 ثانية
 });
+
 
 
   // تفعيل وضع DND
