@@ -5,9 +5,7 @@ const ftp = require("basic-ftp");
 require('./clear.js');  // ضيف الكود ده في آخر index.js
 const sendWelcomeImage = require('./welcome');
 
-client.on('guildMemberAdd', member => {
-  sendWelcomeImage(member);
-});
+
 
 
 // إعدادات البوت
@@ -88,6 +86,8 @@ client.once('ready', () => {
     i++;
   }, 30 * 1000); // تحديث النشاط كل 30 ثانية
 });
-
+client.on('guildMemberAdd', member => {
+  sendWelcomeImage(member);
+});
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
