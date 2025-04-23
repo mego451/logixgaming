@@ -74,7 +74,13 @@ const statuses = [
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-  
+  const eventsPath = path.join(__dirname, 'events');
+fs.readdirSync(eventsPath).forEach(file => {
+  if (file.endsWith('.js')) {
+    const event = require(path.join(eventsPath, file));
+    client.on(event.name, event.execute);
+  }
+});
   // تغيير النشاط كل 30 ثانية
   let i = 0;
   setInterval(() => {
