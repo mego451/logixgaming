@@ -54,32 +54,26 @@ client.on("ready", async () => {
     return;
   }
 
- const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
-const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
+  const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
+  const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
 
-async function updatePlayerCountChannelName() {
-  try {
-    const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
-    const { playerCount } = JSON.parse(data);
+  async function updatePlayerCountChannelName() {
+    try {
+      const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+      const { playerCount } = JSON.parse(data);
 
-    const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
-    if (channel) {
-      await channel.setName(`🟢 Players: ${playerCount}`);
-      console.log("✅ Channel name updated.");
+      const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
+      if (channel) {
+        await channel.setName(`🟢 Players: ${playerCount}`);
+        console.log("✅ Channel name updated.");
+      }
+    } catch (err) {
+      console.error("❌ Error updating channel name:", err.message);
     }
-  } catch (err) {
-    console.error("❌ Error updating channel name:", err.message);
   }
-}
 
-client.on("ready", () => {
+  // تحديث اسم القناة كل 60 ثانية
   setInterval(updatePlayerCountChannelName, 1000); // كل دقيقة
-
-
-  
-  // باقي الأكواد...
-
-
 
   // حالات البوت
   const statuses = [
@@ -97,7 +91,7 @@ client.on("ready", () => {
       status: 'dnd',
     });
     i++;
-  }, 30000);
+  }, 60000); // تحديث الحالة كل 30 ثانية
 });
 
 client.on("messageCreate", async (message) => {
