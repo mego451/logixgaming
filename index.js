@@ -58,11 +58,13 @@ client.on("messageCreate", (message) => {
   // رفع الملف على FTP
   uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
+// فتح بورت 8000 عشان Koyeb ميعملش sleep
 const net = require("net");
-
-const server = net.createServer();
+const server = net.createServer(socket => {
+  socket.end("pong\n");
+});
 server.listen(8000, () => {
-  console.log("Health check port 8000 is open");
+  console.log("✅ Fake health check TCP server running on port 8000");
 });
 
 client.login(DISCORD_TOKEN);
