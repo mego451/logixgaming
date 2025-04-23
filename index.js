@@ -56,7 +56,7 @@ client.on("ready", async () => {
 
   setInterval(() => {
     const count = guild.memberCount;
-    memberChannel.setName(`👥 Members: ${count}`)
+    memberChannel.setName(`👥 Server Members: ${count}`)
       .then(() => console.log(`🔁 تم تحديث اسم القناة بعدد الأعضاء: ${count}`))
       .catch(console.error);
   }, 60000);
