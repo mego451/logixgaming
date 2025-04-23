@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
 require('./clear.js');  // ضيف الكود ده في آخر index.js
-const sendWelcomeImage = require('./welcome');
+const sendWelcomeImage = require('./events/welcome');
 
 
 
