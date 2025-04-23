@@ -83,23 +83,7 @@ const client = new Client({
   ]
 });
 
-client.on('guildMemberAdd', async member => {
-  const channel = member.guild.channels.cache.get('1363168615691452727');
-  if (!channel) return;
 
-  // تحميل صورة الترحيب من مجلد البوت (لازم تكون الصورة في نفس مجلد السكربت أو تحدد المسار الصحيح)
-  const attachment = new AttachmentBuilder('./welcome.jpeg');
-
-  // إنشاء الـ Embed
-  const embed = new EmbedBuilder()
-    .setTitle(`👋 Welcome!`)
-    .setDescription(`Hello ${member.user.username} and welcome to LogiXGaming Discord Server!\nYou are member number ${member.guild.memberCount}, enjoy your stay!`)
-    .setImage('attachment://welcome.jpeg')
-    .setColor('#00bfff');
-
-  // إرسال الرسالة
-  channel.send({ embeds: [embed], files: [attachment] });
-});
 
 
 
@@ -119,3 +103,20 @@ client.on('guildMemberAdd', member => {
 });
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
+client.on('guildMemberAdd', async member => {
+  const channel = member.guild.channels.cache.get('1363168615691452727');
+  if (!channel) return;
+
+  // تحميل صورة الترحيب من مجلد البوت (لازم تكون الصورة في نفس مجلد السكربت أو تحدد المسار الصحيح)
+  const attachment = new AttachmentBuilder('./welcome.jpeg');
+
+  // إنشاء الـ Embed
+  const embed = new EmbedBuilder()
+    .setTitle(`👋 Welcome!`)
+    .setDescription(`Hello ${member.user.username} and welcome to LogiXGaming Discord Server!\nYou are member number ${member.guild.memberCount}, enjoy your stay!`)
+    .setImage('attachment://welcome.jpeg')
+    .setColor('#00bfff');
+
+  // إرسال الرسالة
+  channel.send({ embeds: [embed], files: [attachment] });
+});
