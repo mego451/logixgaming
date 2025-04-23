@@ -14,8 +14,13 @@ exec('npm install canvas', (error, stdout, stderr) => {
     console.error(`stderr: ${stderr}`);
     return;
   }
+  console.log('Canvas package installed successfully!');
   console.log(`stdout: ${stdout}`);
+  
+  // بعد التثبيت، استدعي الكود اللي بيحتاج المكتبة هنا
+  require('./welcome');  // لو أنت عايز تستدعي ملف تاني بعد التثبيت
 });
+
 
 // باقي الكود بتاعك بيجي هنا
 
