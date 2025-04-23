@@ -101,7 +101,7 @@ client.on('guildMemberAdd', async member => {
   channel.send({ embeds: [embed], files: [attachment] });
 });
 
-client.login('توكن-البوت-هنا');
+
 
   // تغيير النشاط كل 30 ثانية
   let i = 0;
