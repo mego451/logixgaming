@@ -41,7 +41,6 @@ async function uploadFileToFTP(localPath, remotePath) {
 client.on("ready", async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
-  // جلب السيرفر بالقوة إذا مش موجود في الكاش
   const guild = await client.guilds.fetch("1362391776391856229").catch(console.error);
   if (!guild) {
     console.error("❌ السيرفر مش موجود أو حصلت مشكلة في جلبه.");
@@ -54,32 +53,34 @@ client.on("ready", async () => {
     return;
   }
 
-  
   const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
 
-  
+  // دالة لتحديث اسم القناة
+  async function updatePlayerCountChannelName() {
+    try {
+      if (fs.existsSync(PLAYER_COUNT_FILE)) {
+        const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+        const { playerCount } = JSON.parse(data);
 
-// دالة لتحديث اسم القناة
-async function updatePlayerCountChannelName() {
-  try {
-    if (fs.existsSync(PLAYER_COUNT_FILE)) {
-      const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
-      const { playerCount } = JSON.parse(data);
+        if (playerCount === undefined) {
+          console.error("❌ Player count is undefined.");
+          return;
+        }
 
-      const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
-      if (channel) {
-        await channel.setName(`🟢 Players: ${playerCount}`);
-        console.log("✅ Channel name updated.");
+        const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
+        if (channel) {
+          await channel.setName(`🟢 Players: ${playerCount}`);
+          console.log("✅ Channel name updated.");
+        }
+      } else {
+        console.error("❌ playercount.json file not found.");
       }
+    } catch (err) {
+      console.error("❌ Error updating player count:", err.message);
     }
-  } catch (err) {
-    console.error("❌ Error updating player count:", err.message);
   }
-}
 
-
-
-  // تحديث اسم القناة كل 60 ثانية
+  // تحديث اسم القناة كل دقيقة
   setInterval(updatePlayerCountChannelName, 1000); // كل دقيقة
 
   // حالات البوت
@@ -98,7 +99,7 @@ async function updatePlayerCountChannelName() {
       status: 'dnd',
     });
     i++;
-  }, 60000); // تحديث الحالة كل 30 ثانية
+  }, 60000); // تحديث الحالة كل دقيقة
 });
 
 client.on("messageCreate", async (message) => {
