@@ -62,26 +62,21 @@ client.on("ready", async () => {
 // دالة لتحديث اسم القناة
 async function updatePlayerCountChannelName() {
   try {
-    // التأكد من وجود الملف وإذا مش موجود هنقوم بإنشائه
-    if (!fs.existsSync(PLAYER_COUNT_FILE)) {
-      const initialData = { playerCount: 0 }; // أو قيمة مبدئية لما يكون الملف جديد
-      fs.writeFileSync(PLAYER_COUNT_FILE, JSON.stringify(initialData, null, 2));
-      console.log("✅ Created playercount.json with initial value.");
-    }
+    if (fs.existsSync(PLAYER_COUNT_FILE)) {
+      const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
+      const { playerCount } = JSON.parse(data);
 
-    // قراءة البيانات من الملف
-    const data = fs.readFileSync(PLAYER_COUNT_FILE, 'utf-8');
-    const { playerCount } = JSON.parse(data);
-
-    const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
-    if (channel) {
-      await channel.setName(`🟢 Players: ${playerCount}`);
-      console.log("✅ Channel name updated.");
+      const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
+      if (channel) {
+        await channel.setName(`🟢 Players: ${playerCount}`);
+        console.log("✅ Channel name updated.");
+      }
     }
   } catch (err) {
-    console.error("❌ Error updating channel name:", err.message);
+    console.error("❌ Error updating player count:", err.message);
   }
 }
+
 
 
   // تحديث اسم القناة كل 60 ثانية
