@@ -82,14 +82,17 @@ async function downloadPlayerCountAndUpdateChannel(channelId, retries = 3) {
   }
 
   if (playerCount !== null) {
-    const channel = client.channels.cache.get(channelId);
-    if (channel) {
-      try {
+    try {
+      const guild = await client.guilds.fetch("1362391776391856229");
+      const channel = await guild.channels.fetch(channelId);
+      if (channel && channel.setName) {
         await channel.setName(`🟢 Players: ${playerCount}`);
         console.log("✅ Channel name updated.");
-      } catch (err) {
-        console.error("❌ Failed to update channel name:", err.message);
+      } else {
+        console.error("❌ Channel not found or invalid.");
       }
+    } catch (err) {
+      console.error("❌ Failed to fetch or update channel name:", err.message);
     }
   }
 }
