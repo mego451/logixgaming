@@ -58,13 +58,14 @@ client.on("messageCreate", (message) => {
   // رفع الملف على FTP
   uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
-// فتح بورت 8000 عشان Koyeb ميعملش sleep
-const net = require("net");
-const server = net.createServer(socket => {
-  socket.end("pong\n");
-});
-server.listen(8000, () => {
-  console.log("✅ Fake health check TCP server running on port 8000");
+client.once('ready', () => {
+    console.log('بوت جاهز!');
+    
+    // تعيين الحالة إلى "Playing GTA"
+    client.user.setActivity('Playing GTA', { type: 'PLAYING' });
+
+    // تفعيل وضع DND
+    client.user.setStatus('dnd');
 });
 
 client.login(DISCORD_TOKEN);
