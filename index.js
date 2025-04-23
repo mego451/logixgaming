@@ -8,6 +8,7 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = "1363168636914630794";
 const FILE_PATH = path.join(__dirname, "discord-to-mta.json");
 const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
+
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -17,26 +18,8 @@ const client = new Client({
   ],
 });
 
-const ftpClient = new ftp.Client();
-ftpClient.ftp.verbose = false;
-
-async function connectFTP() {
-  try {
-    await ftpClient.access({
-      host: "78.47.204.80",
-      user: "lgserver",
-      password: "20012155m",
-      secure: false,
-    });
-    console.log("✅ FTP connected.");
-  } catch (err) {
-    console.error("❌ FTP connection error:", err.message);
-    throw err; // رمي الخطأ لإيقاف الكود في حال فشل الاتصال
-  }
-}
-
 async function uploadFileToFTP(localPath, remotePath) {
-  const client = new ftp.Client(); // Local client
+  const client = new ftp.Client();
   client.ftp.verbose = false;
 
   try {
@@ -52,20 +35,19 @@ async function uploadFileToFTP(localPath, remotePath) {
   } catch (err) {
     console.error("❌ FTP Upload Error:", err.message);
   } finally {
-    client.close(); // Close it properly after done
+    client.close();
   }
 }
 
-
-async function downloadPlayerCount(retries = 3) {
+async function downloadPlayerCountAndUpdateChannel(channelId, retries = 3) {
   let playerCount = null;
 
   for (let attempt = 1; attempt <= retries; attempt++) {
-    const client = new ftp.Client(); // Local client
-    client.ftp.verbose = false;
+    const ftpClient = new ftp.Client();
+    ftpClient.ftp.verbose = false;
 
     try {
-      await client.access({
+      await ftpClient.access({
         host: "78.47.204.80",
         user: "lgserver",
         password: "20012155m",
@@ -73,7 +55,7 @@ async function downloadPlayerCount(retries = 3) {
       });
 
       const remotePath = "/mods/deathmatch/resources/[In-Server]/mg_Discord/playercount.json";
-      await client.downloadTo(PLAYER_COUNT_FILE, remotePath);
+      await ftpClient.downloadTo(PLAYER_COUNT_FILE, remotePath);
       console.log("✅ playercount.json file downloaded successfully!");
 
       if (fs.existsSync(PLAYER_COUNT_FILE)) {
@@ -87,7 +69,7 @@ async function downloadPlayerCount(retries = 3) {
         console.log("🟢 Player count:", playerCount);
       }
 
-      break; // Exit loop on success
+      break;
     } catch (err) {
       console.error(`❌ Error downloading player count (attempt ${attempt}): ${err.message}`);
       if (attempt < retries) {
@@ -95,21 +77,25 @@ async function downloadPlayerCount(retries = 3) {
         await new Promise(resolve => setTimeout(resolve, 5000));
       }
     } finally {
-      client.close(); // Close after each attempt
+      ftpClient.close();
     }
   }
 
-  return playerCount;
+  if (playerCount !== null) {
+    const channel = client.channels.cache.get(channelId);
+    if (channel) {
+      try {
+        await channel.setName(`🟢 Players: ${playerCount}`);
+        console.log("✅ Channel name updated.");
+      } catch (err) {
+        console.error("❌ Failed to update channel name:", err.message);
+      }
+    }
+  }
 }
-
-
-
 
 client.on("ready", async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
-
-  // الاتصال بـ FTP عند بدء البوت
-  await connectFTP();
 
   const guild = await client.guilds.fetch("1362391776391856229").catch(console.error);
   if (!guild) {
@@ -123,24 +109,8 @@ client.on("ready", async () => {
     return;
   }
 
-  const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
+  setInterval(() => downloadPlayerCountAndUpdateChannel("1364623636509626420"), 60000);
 
-  // دالة لتحديث اسم القناة
-  async function updatePlayerCountChannelName() {
-    const playerCount = await downloadPlayerCount();
-    if (playerCount === null) return;
-
-    const channel = client.channels.cache.get(CHANNEL_ID_TO_UPDATE);
-    if (channel) {
-      await channel.setName(`🟢 Players: ${playerCount}`);
-      console.log("✅ Channel name updated.");
-    }
-  }
-
-  // تحديث اسم القناة كل دقيقة
-  setInterval(updatePlayerCountChannelName, 1000); // كل دقيقة
-
-  // حالات البوت
   const statuses = [
     { name: 'MTA: LogiXGaming Roleplay', type: ActivityType.Playing },
     { name: 'Sarah Jay P*rn', type: ActivityType.Watching },
@@ -156,7 +126,7 @@ client.on("ready", async () => {
       status: 'dnd',
     });
     i++;
-  }, 60000); // تحديث الحالة كل دقيقة
+  }, 60000);
 });
 
 client.on("messageCreate", async (message) => {
