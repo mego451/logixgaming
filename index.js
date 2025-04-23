@@ -4,7 +4,7 @@ const path = require("path");
 const ftp = require("basic-ftp");
 
 // إعدادات البوت
-const DISCORD_TOKEN = "MTE3MDMwMzQ5MzAyNjg3NzQ5MQ.GaAlif.kclCpZffQ6gt7d3JmdXuCzSrcgkwZDk5Dxaiwg";
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = "1363168636914630794";
 const FILE_PATH = path.join(__dirname, "discord-to-mta.json");
 
