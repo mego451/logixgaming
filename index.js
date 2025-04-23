@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require("discord.js");
+const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
@@ -60,8 +60,6 @@ client.on("messageCreate", async (message) => {
   await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
 
-const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
-
 const statuses = [
   { name: 'MTA: LogiXGaming Roleplay', type: ActivityType.Playing },
   { name: 'Sarah Jay P*rn', type: ActivityType.Watching },
@@ -83,12 +81,6 @@ client.once('ready', () => {
     i++;
   }, 30 * 1000); // تحديث النشاط كل 30 ثانية
 });
-
-
-
-  // تفعيل وضع DND
-  
-
 
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
