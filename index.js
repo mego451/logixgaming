@@ -7,7 +7,7 @@ require('./clear.js');
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const CHANNEL_ID = "1363168636914630794";
 const FILE_PATH = path.join(__dirname, "discord-to-mta.json");
-
+const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -54,7 +54,7 @@ client.on("ready", async () => {
     return;
   }
 
-  const PLAYER_COUNT_FILE = path.join(__dirname, 'playercount.json');
+  
   const CHANNEL_ID_TO_UPDATE = "1364623636509626420"; // ID القناة اللي هيتغير اسمها
 
   async function updatePlayerCountChannelName() {
