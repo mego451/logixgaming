@@ -41,6 +41,18 @@ async function uploadFileToFTP(localPath, remotePath) {
 client.on("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 
+  // تحديث عدد الأعضاء في اسم القناة
+  const guild = client.guilds.cache.get("1363168613662228501"); // ID السيرفر
+  const memberChannel = guild.channels.cache.get("1364623636509626420"); // ID القناة
+
+  setInterval(() => {
+    const count = guild.memberCount;
+    memberChannel.setName(`👥 Game Members: ${count}`)
+      .then(() => console.log(`🔁 تم تحديث اسم القناة بعدد الأعضاء: ${count}`))
+      .catch(console.error);
+  }, 60000); // كل دقيقة
+
+  // حالات البوت
   const statuses = [
     { name: 'MTA: LogiXGaming Roleplay', type: ActivityType.Playing },
     { name: 'Sarah Jay P*rn', type: ActivityType.Watching },
@@ -56,7 +68,7 @@ client.on("ready", () => {
       status: 'dnd',
     });
     i++;
-  }, 30000); // كل 30 ثانية
+  }, 30000);
 });
 
 client.on("messageCreate", async (message) => {
@@ -81,13 +93,12 @@ client.on('guildMemberAdd', async member => {
   const attachment = new AttachmentBuilder('./welcome.jpeg');
 
   const embed = new EmbedBuilder()
-    .setImage('attachment://welcome.jpeg') // بس صورة
+    .setImage('attachment://welcome.jpeg')
     .setColor('#00bfff');
 
   const welcomeMessage = `👋 Hello ${member.user.username} and welcome to **LogiXGaming** Discord Server!\nYou are member number **${member.guild.memberCount}** – enjoy your stay!`;
 
   channel.send({ content: welcomeMessage, embeds: [embed], files: [attachment] });
 });
-
 
 client.login(DISCORD_TOKEN);
