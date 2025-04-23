@@ -63,7 +63,7 @@ client.user.setActivity('in your nose', { type: 'PLAYING' });
 const statuses = [
   { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
   { name: 'P*rn', type: 'WATCHING' },
-  { name: 'Mando's Mom', type: 'WATCHING' },
+  { name: "Mando's Mom", type: 'WATCHING' },
   { name: 'Essam Sasa', type: 'LISTENING' }
 ];
 
