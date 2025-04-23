@@ -59,7 +59,7 @@ client.on("messageCreate", async (message) => {
   // رفع الملف على FTP بعد الكتابة
   await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
-client.user.setActivity('in your nose', { type: 'PLAYING' });
+
 const statuses = [
   { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
   { name: 'P*rn', type: 'WATCHING' },
@@ -69,7 +69,7 @@ const statuses = [
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-
+client.user.setActivity('in your nose', { type: 'PLAYING' });
   // تغيير النشاط كل دقيقة
   let i = 0;
   setInterval(() => {
