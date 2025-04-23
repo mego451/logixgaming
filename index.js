@@ -112,7 +112,7 @@ client.on("ready", async () => {
     return;
   }
 
-  setInterval(() => downloadPlayerCountAndUpdateChannel("1364623636509626420"), 60000);
+  setInterval(() => downloadPlayerCountAndUpdateChannel("1364623636509626420"), 5000);
 
   const statuses = [
     { name: 'MTA: LogiXGaming Roleplay', type: ActivityType.Playing },
