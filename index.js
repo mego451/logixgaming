@@ -42,7 +42,8 @@ client.on("ready", () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
 });
 
-client.on("messageCreate", (message) => {
+// إرسال الرسائل وتخزينها
+client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
   if (message.channel.id !== CHANNEL_ID) return;
 
@@ -55,20 +56,21 @@ client.on("messageCreate", (message) => {
   fs.writeFileSync(FILE_PATH, JSON.stringify(payload, null, 2));
   console.log("✅ Message saved to file.");
 
-  // رفع الملف على FTP
-  uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
+  // رفع الملف على FTP بعد الكتابة
+  await uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
+});
 
-  const statuses = [
+const statuses = [
   { name: 'MTA: LogiXGaming Roleplay', type: 'PLAYING' },
   { name: 'P*rn', type: 'WATCHING' },
   { name: 'Essam Sasa', type: 'LISTENING' },
   { name: 'La casa de papel', type: 'WATCHING' }
 ];
 
+// تغيير النشاط كل 60 ثانية
 client.once('ready', () => {
   console.log('بوت جاهز!');
 
-  // تغيير النشاط كل 60 ثانية
   let i = 0;
   setInterval(() => {
     const status = statuses[i % statuses.length];
@@ -76,8 +78,9 @@ client.once('ready', () => {
     i++;
   }, 60 * 1000);
 
+  // تغيير الحالة إلى "عدم الإزعاج" عند بدء البوت
   client.user.setStatus('dnd');
 });
 
-
+// تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
