@@ -2,6 +2,7 @@ const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
+require('./clear.js');  // ضيف الكود ده في آخر index.js
 
 // إعدادات البوت
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
