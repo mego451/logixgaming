@@ -2,6 +2,23 @@ const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
+const { exec } = require('child_process');
+
+// تثبيت مكتبة canvas إذا كانت مش متثبتة
+exec('npm install canvas', (error, stdout, stderr) => {
+  if (error) {
+    console.error(`Error: ${error.message}`);
+    return;
+  }
+  if (stderr) {
+    console.error(`stderr: ${stderr}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+});
+
+// باقي الكود بتاعك بيجي هنا
+
 require('./clear.js');  // ضيف الكود ده في آخر index.js
 const sendWelcomeImage = require('./welcome');
 
