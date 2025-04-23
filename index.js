@@ -85,7 +85,7 @@ client.once('ready', () => {
 
   // تفعيل وضع DND
   
-});
+
 
 // تسجيل الدخول للبوت
 client.login(DISCORD_TOKEN);
