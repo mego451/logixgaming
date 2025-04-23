@@ -3,7 +3,8 @@ const { Events, AttachmentBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
   name: Events.GuildMemberAdd,
   async execute(member) {
-    const welcomeChannel = member.guild.systemChannel; // أو استخدم ID لقناة معينة
+    const welcomeChannel = member.guild.channels.cache.get('1363168615691452727');
+
 
     if (!welcomeChannel) return;
 
