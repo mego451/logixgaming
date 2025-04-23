@@ -58,5 +58,11 @@ client.on("messageCreate", (message) => {
   // رفع الملف على FTP
   uploadFileToFTP(FILE_PATH, "/mods/deathmatch/resources/[In-Server]/mg_Discord/discord-to-mta.json");
 });
+const net = require("net");
+
+const server = net.createServer();
+server.listen(8000, () => {
+  console.log("Health check port 8000 is open");
+});
 
 client.login(DISCORD_TOKEN);
