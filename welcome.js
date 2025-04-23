@@ -1,33 +1,25 @@
-const { createCanvas, loadImage } = require('canvas');
-const { AttachmentBuilder } = require('discord.js');
+const { Events, AttachmentBuilder, EmbedBuilder } = require("discord.js");
 
-module.exports = async function sendWelcomeImage(member) {
-  const canvas = createCanvas(800, 250);
-  const ctx = canvas.getContext('2d');
+module.exports = {
+  name: Events.GuildMemberAdd,
+  async execute(member) {
+    const welcomeChannel = member.guild.systemChannel; // أو استخدم ID لقناة معينة
 
-  // خلفية مخصصة (لينك لصورة خلفية ترحيب)
-  const background = await loadImage('https://i.imgur.com/zvWTUVu.jpg');
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    if (!welcomeChannel) return;
 
-  // نص الترحيب
-  ctx.fillStyle = '#ffffff';
-  ctx.font = '28px sans-serif';
-  ctx.fillText(`Welcome ${member.user.username}!`, 300, 100);
-  ctx.fillText(`You are member #${member.guild.memberCount}`, 300, 140);
+    // إعداد صورة الترحيب من لينك خارجي
+    const image = new AttachmentBuilder("https://i.imgur.com/ReNFzF5.jpeg", {
+      name: "welcome.jpeg",
+    });
 
-  // صورة الأفاتار
-  const avatar = await loadImage(member.user.displayAvatarURL({ format: 'png' }));
-  ctx.beginPath();
-  ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-  ctx.closePath();
-  ctx.clip();
-  ctx.drawImage(avatar, 25, 25, 200, 200);
+    // إنشاء رسالة ترحيب
+    const embed = new EmbedBuilder()
+      .setTitle(`👋 Welcome!`)
+      .setDescription(`Hello ${member.user.username} and welcome to LogiXGaming Discord Server!\nYou are member number ${member.guild.memberCount}, enjoy your stay!`)
+      .setImage("attachment://welcome.jpeg")
+      .setColor("#00bfff");
 
-  // إرسال الصورة
-  const attachment = new AttachmentBuilder(canvas.toBuffer(), { name: 'welcome.png' });
-  const channel = member.guild.systemChannel || member.guild.channels.cache.find(ch => ch.type === 0 && ch.permissionsFor(member.guild.members.me).has("SendMessages"));
-  
-  if (channel) {
-    channel.send({ files: [attachment] });
-  }
+    // إرسال الرسالة
+    await welcomeChannel.send({ embeds: [embed], files: [image] });
+  },
 };
