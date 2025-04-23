@@ -3,7 +3,6 @@ const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
 require('./clear.js');  // ضيف الكود ده في آخر index.js
-const sendWelcomeImage = require('./events/welcome');
 
 
 
@@ -74,13 +73,36 @@ const statuses = [
 
 client.once('ready', () => {
   console.log('بوت جاهز!');
-  const eventsPath = path.join(__dirname, 'events');
-fs.readdirSync(eventsPath).forEach(file => {
-  if (file.endsWith('.js')) {
-    const event = require(path.join(eventsPath, file));
-    client.on(event.name, event.execute);
-  }
+  const { Client, GatewayIntentBits, AttachmentBuilder, EmbedBuilder } = require('discord.js');
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages
+  ]
 });
+
+client.on('guildMemberAdd', async member => {
+  const channel = member.guild.channels.cache.get('1363168615691452727');
+  if (!channel) return;
+
+  // تحميل صورة الترحيب من مجلد البوت (لازم تكون الصورة في نفس مجلد السكربت أو تحدد المسار الصحيح)
+  const attachment = new AttachmentBuilder('./welcome.jpeg');
+
+  // إنشاء الـ Embed
+  const embed = new EmbedBuilder()
+    .setTitle(`👋 Welcome!`)
+    .setDescription(`Hello ${member.user.username} and welcome to LogiXGaming Discord Server!\nYou are member number ${member.guild.memberCount}, enjoy your stay!`)
+    .setImage('attachment://welcome.jpeg')
+    .setColor('#00bfff');
+
+  // إرسال الرسالة
+  channel.send({ embeds: [embed], files: [attachment] });
+});
+
+client.login('توكن-البوت-هنا');
+
   // تغيير النشاط كل 30 ثانية
   let i = 0;
   setInterval(() => {
