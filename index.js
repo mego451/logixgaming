@@ -2,34 +2,8 @@ const { Client, GatewayIntentBits, ActivityType } = require("discord.js");
 const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
-const { exec } = require('child_process');
-
-// تثبيت مكتبة canvas إذا كانت مش متثبتة
-exec('npm install canvas', (error, stdout, stderr) => {
-  if (error) {
-    console.error(`Error: ${error.message}`);
-    return;
-  }
-  if (stderr) {
-    console.error(`stderr: ${stderr}`);
-    return;
-  }
-  console.log('Canvas package installed successfully!');
-  console.log(`stdout: ${stdout}`);
-  
-  // بعد التثبيت، استدعي الكود اللي بيحتاج المكتبة هنا
-  require('./welcome');  // لو أنت عايز تستدعي ملف تاني بعد التثبيت
-});
-
-
-// باقي الكود بتاعك بيجي هنا
-
 require('./clear.js');  // ضيف الكود ده في آخر index.js
-const sendWelcomeImage = require('./welcome');
 
-client.on('guildMemberAdd', member => {
-  sendWelcomeImage(member);
-});
 
 // إعدادات البوت
 const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
