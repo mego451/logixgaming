@@ -3,6 +3,11 @@ const fs = require("fs");
 const path = require("path");
 const ftp = require("basic-ftp");
 require('./clear.js');  // ضيف الكود ده في آخر index.js
+const sendWelcomeImage = require('./welcome');
+
+client.on('guildMemberAdd', member => {
+  sendWelcomeImage(member);
+});
 
 
 // إعدادات البوت
