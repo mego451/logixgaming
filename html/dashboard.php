@@ -35,57 +35,10 @@ function getPlayerData($username) {
 }
 
 // إعداد صفحة الدخول
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['username'])) {
-    echo '
-    <html lang="ar">
-      <head>
-        <meta charset="UTF-8">
-        <title>تسجيل الدخول - سيرفر MTA</title>
-        <style>
-          body {
-            font-family: Arial;
-            background-color: #111;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-          }
-          .login-box {
-            background: #222;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #000;
-          }
-          input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-          }
-          button {
-            background: #4caf50;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            width: 100%;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="login-box">
-          <h2>تسجيل الدخول</h2>
-          <form action="" method="GET">
-            <input type="text" name="username" placeholder="اسم المستخدم" required>
-            <button type="submit">دخول</button>
-          </form>
-        </div>
-      </body>
-    </html>';
-} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['username'])) {
+if (isset($_GET['username'])) {
     $username = $_GET['username'];
+
+    // جلب بيانات اللاعب
     $playerData = getPlayerData($username);
 
     if (!$playerData) {
@@ -153,9 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && !isset($_GET['username'])) {
           </body>
         </html>';
     }
+} else {
+    // إذا لم يكن اسم المستخدم موجودًا في الرابط
+    echo "من فضلك أدخل اسم المستخدم.";
 }
 
 // غلق الاتصال بـ FTP
 ftp_close($ftp_connection);
 ?>
-
