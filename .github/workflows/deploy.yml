@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Upload to InfinityFree
+      - name: Upload html folder to InfinityFree
         uses: SamKirkland/FTP-Deploy-Action@v4.0.0
         with:
           ftp-server: ftpupload.net
           ftp-username: ${{ secrets.FTP_USERNAME }}
           ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./
+          local-dir: ./html
           remote-dir: /htdocs
