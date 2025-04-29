@@ -3,7 +3,7 @@ name: Deploy to InfinityFree
 on:
   push:
     branches:
-      - html
+      - html  # تأكد من اسم الفرع الصحيح
 
 jobs:
   deploy:
@@ -16,8 +16,10 @@ jobs:
       - name: Upload html folder to InfinityFree
         uses: SamKirkland/FTP-Deploy-Action@v4.0.0
         with:
-          ftp-server: ftpupload.net
-          ftp-username: ${{ secrets.FTP_USERNAME }}
-          ftp-password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./html
-          remote-dir: /htdocs
+          server: ftpupload.net  # بدل ftp-server بـ server
+          username: ${{ secrets.FTP_USERNAME }}  # بدل ftp-username بـ username
+          password: ${{ secrets.FTP_PASSWORD }}  # بدل ftp-password بـ password
+          port: 21  # أضف البورت (عادةً 21 لـ FTP)
+          protocol: ftp  # اختر البروتوكول (ftp أو ftps)
+          local-dir: ./html  # مجلد الملفات المحلي
+          server-dir: /htdocs  # مجلد السيرفر البعيد
