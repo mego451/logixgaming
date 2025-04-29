@@ -38,7 +38,7 @@
 </head>
 <body>
     <div class="login-box">
-        <h2>تسجيل الدخول</h2>
+        <h2>Login</h2>
         <form action="dashboard.php" method="GET">
             <input type="text" name="username" placeholder="اسم المستخدم" required>
             <button type="submit">دخول</button>
