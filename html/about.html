@@ -1,34 +1,257 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>معلومات السيرفر</title>
+  <title>LogiXGaming - Server Info</title>
   <style>
+    /* إعدادات عامة للتصميم */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #eee;
+      background-color: #0d0d0d;
+      color: #f1f1f1;
+      font-family: 'Cairo', sans-serif;
       text-align: center;
-      padding: 50px;
+      padding: 30px;
+      margin: 0;
+      direction: ltr; /* اللغة الافتراضية إنجليزي */
     }
-    .card {
-      background-color: #222;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 600px;
+
+    /* حاوية المحتوى الأساسية */
+    .container {
+      max-width: 900px;
       margin: auto;
+      background-color: #1a1a1a;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    }
+
+    /* عناوين رئيسية */
+    h1 {
+      color: #00ffd5;
+      margin-bottom: 10px;
+    }
+    h2 {
+      color: #ffcc00;
+      margin-top: 30px;
+    }
+
+    /* القوائم بدون نقط */
+    ul {
+      list-style: none;
+      padding: 0;
+      line-height: 1.8;
+    }
+    li::before {
+      content: "✔️ ";
+      color: #00ff88;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    /* زر تغيير اللغة */
+    .lang-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #00ffd5;
+      color: #000;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      z-index: 999;
+    }
+    .lang-btn:hover {
+      background-color: #00c9aa;
+    }
+
+    /* اللوجو */
+    .logo {
+      width: 750px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    /* زرار الديسكورد */
+    .discord-btn {
+      background-color: #5865F2;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: 0.3s;
+    }
+    .discord-btn:hover {
+      background-color: #4752c4;
+    }
+
+    /* صور الأقسام */
+    .section-img {
+      width: 30%;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+
+    /* أيقونات الوظائف */
+    .job-icon {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    /* أدوات Tooltip */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 200px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -100px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>عن سيرفر MTA</h1>
-    <p>اسم السيرفر: ⭐ MTA Egypt RP ⭐</p>
-    <p>نوع السيرفر: RolePlay</p>
-    <p>عدد اللاعبين: 50 لاعب</p>
-    <p>الايبي: <code>mtasa://123.456.789.0:22003</code></p>
-    <p>الديسكورد: <a href="https://discord.gg/yourserver" target="_blank">اضغط هنا</a></p>
+
+  <!-- زر اللغة أعلى الصفحة -->
+  <button class="lang-btn" onclick="toggleLanguage()">العربية</button>
+
+  <!-- ====== المحتوى الإنجليزي ====== -->
+  <div class="container" id="content-en">
+    <!-- اللوجو->https://i.imgur.com/ReNFzF5.jpeg-->
+    <img src="https://i.imgur.com/ReNFzF5.jpeg" alt="LogiXGaming Logo" class="logo">
+
+    <h1>🕹️ LogiXGaming Server</h1>
+    <p><strong>Type:</strong> Roleplay</p>
+    <p><strong>Version:</strong>  V.5</p>
+
+    <!-- قسم الوظائف -->
+    <h2>🛠️ Available Jobs</h2>
+      <li><span class="tooltip"><img src="https://img.icons8.com/?size=100&id=sWKk2QISB1bz&format=png&color=000000" class="job-icon"><span class="tooltiptext">Deliverer - Deliver goods around the city</span></span> Deliverer</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/taxi.png" class="job-icon"><span class="tooltiptext">Taxi - Transport people around for money</span></span> Taxi</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/food-delivery.png" class="job-icon"><span class="tooltiptext">Talabat Delivery - Deliver food orders</span></span> Talabat Delivery</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/police.png" class="job-icon"><span class="tooltiptext">Police - Enforce the law and capture criminals</span></span> Police</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/firefighter.png" class="job-icon"><span class="tooltiptext">Fire Fighter - Put out fires around the city</span></span> Fire Fighter</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/forest.png" class="job-icon"><span class="tooltiptext">Lamberjack - Cut trees and collect wood</span></span> Lamberjack</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/ice-cream.png" class="job-icon"><span class="tooltiptext">Icecream Seller - Sell ice cream to players</span></span> Icecream Seller</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/cleaning.png" class="job-icon"><span class="tooltiptext">Jaintor - Clean streets and remove garbage</span></span> Jaintor</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/airplane.png" class="job-icon"><span class="tooltiptext">Pilot - Fly planes for cargo or passengers</span></span> Pilot</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/pizza.png" class="job-icon"><span class="tooltiptext">Pizza Delivery - Deliver pizza to customers</span></span> Pizza Delivery</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/fish.png" class="job-icon"><span class="tooltiptext">Fisherman - Catch fish and sell them</span></span> Fisherman</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/gear.png" class="job-icon"><span class="tooltiptext">Mechanic - Fix vehicles and provide fuel</span></span> Mechanic</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/doctor.png" class="job-icon"><span class="tooltiptext">Doctor - Heal players and treat injuries</span></span> Doctor</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/train.png" class="job-icon"><span class="tooltiptext">Train Driver - Drive trains around the city</span></span> Train Driver</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/tram.png" class="job-icon"><span class="tooltiptext">Tram Driver - Drive trams in the city</span></span> Tram Driver</li>
+    </ul>
+
+    <!-- قسم المميزات -->
+    <h2>🔥 Server Features</h2>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/group.png" class="job-icon"><span class="tooltiptext">Gang Wars - Fight for control over territories</span></span> Gang Wars</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/territory.png" class="job-icon"><span class="tooltiptext">Gang Turfs - Take over areas and defend your turf</span></span> Gang Turfs</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/medal.png" class="job-icon"><span class="tooltiptext">Various Events - Participate in competitive events</span></span> Various Events</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/life.png" class="job-icon"><span class="tooltiptext">Realistic Life - A fully immersive roleplay experience</span></span> Realistic Life</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/car.png" class="job-icon"><span class="tooltiptext">Buy/Sell Cars and Aircrafts - Trade vehicles in the game</span></span> Buy/Sell Cars and Aircrafts</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/house.png" class="job-icon"><span class="tooltiptext">Buy/Sell Houses - Own or sell properties</span></span> Buy/Sell Houses</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/admin.png" class="job-icon"><span class="tooltiptext">Promotion to Admin - Become an admin after proving your worth</span></span> Promotion to Admin</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/diamond.png" class="job-icon"><span class="tooltiptext">VIP Membership - Exclusive perks and a special panel</span></span> VIP Membership</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/bank.png" class="job-icon"><span class="tooltiptext">Banks to Store Money - Store your money safely in the bank</span></span> Banks to Store Money</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/gas.png" class="job-icon"><span class="tooltiptext">Driving License & Fuel System - Get a driving license and fill your fuel</span></span> Driving License & Fuel</li>
+    </ul>
+
+    <!-- زرار الديسكورد -->
+    <a href="https://discord.com/invite/ej8xND3eMQ" target="_blank">
+      <button class="discord-btn">Join Our Discord</button>
+    </a>
   </div>
+
+  <!-- ====== المحتوى العربي ====== -->
+  <div class="container" id="content-ar" style="display: none; direction: rtl;">
+    <!-- اللوجو -->
+    <img src="https://i.imgur.com/ReNFzF5.jpeg" alt="شعار LogiXGaming" class="logo">
+
+    <h1>🕹️ سيرفر LogiXGaming</h1>
+    <p><strong>النوع:</strong> Roleplay</p>
+    <p><strong>الإصدار:</strong> V.5</p>
+
+    <!-- الوظائف -->
+    <h2>🛠️ الوظائف المتاحة</h2>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/delivery-truck.png" class="job-icon"><span class="tooltiptext">عامل توصيل - توصيل البضائع في المدينة</span></span> عامل توصيل</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/taxi.png" class="job-icon"><span class="tooltiptext">تاكسي - نقل اللاعبين مقابل فلوس</span></span> تاكسي</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/food-delivery.png" class="job-icon"><span class="tooltiptext">توصيل طلبات - توصيل الأكل للمنازل</span></span> توصيل طلبات</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/police.png" class="job-icon"><span class="tooltiptext">شرطة - فرض النظام وملاحقة المجرمين</span></span> شرطة</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/firefighter.png" class="job-icon"><span class="tooltiptext">إطفائي - إطفاء الحرائق في المدينة</span></span> إطفائي</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/forest.png" class="job-icon"><span class="tooltiptext">نجار - تقطيع الأشجار وجمع الخشب</span></span> نجار</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/ice-cream.png" class="job-icon"><span class="tooltiptext">بائع آيس كريم - بيع الآيس كريم</span></span> بائع آيس كريم</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/cleaning.png" class="job-icon"><span class="tooltiptext">عامل نظافة - تنظيف الشوارع</span></span> عامل نظافة</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/airplane.png" class="job-icon"><span class="tooltiptext">طيار - قيادة الطائرات</span></span> طيار</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/pizza.png" class="job-icon"><span class="tooltiptext">توصيل بيتزا - توصيل البيتزا للمنازل</span></span> توصيل بيتزا</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/fish.png" class="job-icon"><span class="tooltiptext">صياد - صيد السمك وبيعه</span></span> صياد</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/gear.png" class="job-icon"><span class="tooltiptext">ميكانيكي - إصلاح السيارات وملئها بالبنزين</span></span> ميكانيكي</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/doctor.png" class="job-icon"><span class="tooltiptext">طبيب - علاج اللاعبين المصابين</span></span> طبيب</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/train.png" class="job-icon"><span class="tooltiptext">سائق قطار - قيادة القطارات</span></span> سائق قطار</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/tram.png" class="job-icon"><span class="tooltiptext">سائق ترام - قيادة الترام</span></span> سائق ترام</li>
+    </ul>
+
+    <!-- المميزات -->
+    <h2>🔥 مميزات السيرفر</h2>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/group.png" class="job-icon"><span class="tooltiptext">حروب العصابات - القتال على السيطرة على الأراضي</span></span> حروب العصابات</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/territory.png" class="job-icon"><span class="tooltiptext">أراضي العصابات - احتلال الأراضي والدفاع عنها</span></span> أراضي العصابات</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/medal.png" class="job-icon"><span class="tooltiptext">مسابقات متنوعة - المشاركة في المسابقات</span></span> مسابقات متنوعة</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/life.png" class="job-icon"><span class="tooltiptext">حياة واقعية - تجربة لعب واقعية</span></span> حياة واقعية</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/car.png" class="job-icon"><span class="tooltiptext">شراء وبيع السيارات والطائرات - التجارة في السيارات والطائرات</span></span> شراء وبيع سيارات وطائرات</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/house.png" class="job-icon"><span class="tooltiptext">شراء وبيع بيوت - امتلاك أو بيع العقارات</span></span> شراء وبيع بيوت</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/admin.png" class="job-icon"><span class="tooltiptext">ترقية إلى أدمن - الترقية لتصبح أدمن بعد إثبات جدارتك</span></span> ترقية إلى أدمن</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/diamond.png" class="job-icon"><span class="tooltiptext">عضوية VIP - مميزات حصرية + لوحة خاصة</span></span> عضوية VIP</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/bank.png" class="job-icon"><span class="tooltiptext">بنوك لحفظ الفلوس - لتخزين أموالك بأمان</span></span> بنوك لحفظ الفلوس</li>
+      <li><span class="tooltip"><img src="https://img.icons8.com/ios/50/000000/gas.png" class="job-icon"><span class="tooltiptext">رخصة قيادة ونظام بنزين - الحصول على رخصة قيادة وملء البنزين</span></span> رخصة قيادة ونظام بنزين</li>
+    </ul>
+
+    <!-- زرار الديسكورد -->
+    <a href="https://discord.com/invite/ej8xND3eMQ" target="_blank">
+      <button class="discord-btn">انضم إلى ديسكورد</button>
+    </a>
+  </div>
+
+  <script>
+    function toggleLanguage() {
+      var contentEn = document.getElementById('content-en');
+      var contentAr = document.getElementById('content-ar');
+      var langBtn = document.querySelector('.lang-btn');
+
+      if (contentEn.style.display === 'none') {
+        contentEn.style.display = 'block';
+        contentAr.style.display = 'none';
+        langBtn.innerText = 'العربية';
+      } else {
+        contentEn.style.display = 'none';
+        contentAr.style.display = 'block';
+        langBtn.innerText = 'English';
+      }
+    }
+  </script>
+
 </body>
 </html>
-
