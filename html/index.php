@@ -2,7 +2,7 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>تسجيل الدخول - سيرفر MTA</title>
+    <title>Login - LogiXGaming</title>
     <style>
         body {
             font-family: Arial;
